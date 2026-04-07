@@ -25,6 +25,30 @@ validate_url() {
     [[ "$1" =~ ^https?:// ]]
 }
 
+get_startup_wm_class() {
+    local browser="$1"
+    local url="$2"
+
+    case "$browser" in
+        brave|chrome)
+            # Extrae el dominio y construye la clase igual que Brave/Chrome
+            local domain
+            domain=$(echo "$url" | sed -E 's|https?://([^/]+).*|\1|')
+            local prefix
+            if [[ "$browser" == "brave" ]]; then
+                prefix="brave"
+            else
+                prefix="chrome"
+            fi
+            echo "${prefix}-${domain}__-Default"
+            ;;
+        firefox)
+            # Firefox no usa este mecanismo, devuelve vacío
+            echo ""
+            ;;
+    esac
+}
+
 # =========================
 # CORE FUNCTIONS
 # =========================
@@ -89,6 +113,9 @@ create_app() {
             ;;
     esac
 
+    # StartupWMClass
+    startup_wm_class=$(get_startup_wm_class "$browser" "$app_url")
+
     # Sobrescritura
     if [ -f "$desktop_file" ]; then
         read -p "Ya existe. ¿Sobrescribir? (y/n): " confirm
@@ -96,7 +123,19 @@ create_app() {
     fi
 
     # Crear .desktop
-    cat > "$desktop_file" <<EOL
+    if [ -n "$startup_wm_class" ]; then
+        cat > "$desktop_file" <<EOL
+[Desktop Entry]
+Name=$app_name
+Exec=$exec_cmd
+Terminal=false
+Type=Application
+Icon=$icon_path
+Categories=Network;
+StartupWMClass=$startup_wm_class
+EOL
+    else
+        cat > "$desktop_file" <<EOL
 [Desktop Entry]
 Name=$app_name
 Exec=$exec_cmd
@@ -105,10 +144,15 @@ Type=Application
 Icon=$icon_path
 Categories=Network;
 EOL
+    fi
 
     chmod +x "$desktop_file"
 
+    # Actualizar base de datos de aplicaciones
+    update-desktop-database "$DESKTOP_DIR" 2>/dev/null || true
+
     echo "WebApp creada: $app_name"
+    [ -n "$startup_wm_class" ] && echo "StartupWMClass: $startup_wm_class"
 }
 
 remove_app() {
@@ -120,6 +164,8 @@ remove_app() {
     rm -f "$DESKTOP_DIR/$app_id.desktop"
     rm -f "$ICON_DIR/$app_id.png"
     rm -rf "$PROFILE_BASE/$app_id"
+
+    update-desktop-database "$DESKTOP_DIR" 2>/dev/null || true
 
     echo "Eliminada: $app_name"
 }
