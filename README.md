@@ -1,6 +1,7 @@
 # WebApp Manager (Bash CLI)
 
 Create Linux web apps from any URL using `.desktop` files.
+Creación de aplicaciones web por url usando archivos `.desktop`.
 
 ## Features
 
@@ -10,7 +11,22 @@ Create Linux web apps from any URL using `.desktop` files.
 - Multi-browser support (Brave, Chrome, Firefox)
 - CLI interface
 
+- Crea aplicaciones web al instante
+- Iconos personalizados (descarga automática)
+- Perfiles de navegador independientes opcionales
+- Compatibilidad con múltiples navegadores (Brave, Chrome, Firefox)
+- Interfaz de línea de comandos
+
 ## Installation
+
+Clone the repository
+
+Clona el repositorio
+
+```bash
+git clone git@github.com:raulhongo3132/webapp-manager.git
+cd webapp-manager
+```
 
 ```bash
 chmod +x webapp
@@ -27,7 +43,7 @@ webapp list
 
 ## Example
 
-Create a ChatGPT app:
+Create a Whatsapp app:
 
 ```bash
 webapp create
@@ -38,20 +54,3 @@ webapp create
 - bash
 - curl
 
-## Demo
-
-
----
-
-# 🚀 Cómo instalarlo como comando real
-
-```bash
-chmod +x webapp
-sudo ln -s $(pwd)/webapp /usr/local/bin/webapp
-```
-
-Luego:
-
-```bash
-webapp create
-```
