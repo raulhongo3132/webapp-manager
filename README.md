@@ -16,11 +16,10 @@ Creación de aplicaciones web por url usando archivos `.desktop`.
 - Perfiles de navegador independientes opcionales
 - Compatibilidad con múltiples navegadores (Brave, Chrome, Firefox)
 - Interfaz de línea de comandos
-
+# Instructions | Instrucciones
 ## Installation
 
-Clone the repository
-
+Clone the repository:
 Clona el repositorio
 
 ```bash
@@ -28,29 +27,39 @@ git clone git@github.com:raulhongo3132/webapp-manager.git
 cd webapp-manager
 ```
 
+Make the script executable:
+Hazlo ejecutable
+
 ```bash
-chmod +x webapp
-sudo ln -s $(pwd)/webapp /usr/local/bin/webapp
+chmod +x create-webapp.sh
 ```
 
-## Usage
+## Option 1: Use directly | Usalo directamente
+
+```bash
+./create-webapp.sh create   # Create | Creala
+./create-webapp.sh remove   # Remove | Borrala
+./create-webapp.sh list     # List | Ve las instaladas
+```
+
+The script will prompt you for app details.
+El script te pedirá los detalles de la aplicación.
+
+## Option 2: Make it available globally
+
+(Optional) Create a global command called webapp:
+(Opcional) Cree un comando global llamado webapp:
+
+```bash
+sudo ln -s $(pwd)/create-webapp.sh /usr/local/bin/webapp
+```
+
+Then you can run:
+Entonces puedes correr:
 
 ```bash
 webapp create
 webapp remove
 webapp list
+webapp       # Shows help menu | Muestra el menú
 ```
-
-## Example
-
-Create a Whatsapp app:
-
-```bash
-webapp create
-```
-
-## Requirements
-
-- bash
-- curl
-

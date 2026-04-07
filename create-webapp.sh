@@ -55,7 +55,7 @@ create_app() {
 
     # Icono
     if [ -n "$icon_url" ]; then
-        echo "⬇️ Descargando icono..."
+        echo "Descargando icono..."
         if ! curl -L "$icon_url" -o "$icon_path"; then
             echo "Error descargando icono"
             exit 1
@@ -108,7 +108,7 @@ EOL
 
     chmod +x "$desktop_file"
 
-    echo "✅ WebApp creada: $app_name"
+    echo "WebApp creada: $app_name"
 }
 
 remove_app() {
@@ -121,7 +121,7 @@ remove_app() {
     rm -f "$ICON_DIR/$app_id.png"
     rm -rf "$PROFILE_BASE/$app_id"
 
-    echo "🗑️ Eliminada: $app_name"
+    echo "Eliminada: $app_name"
 }
 
 list_apps() {
