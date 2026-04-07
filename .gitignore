@@ -1,0 +1,26 @@
+# Archivos temporales de bash
+*.swp
+*.bak
+*.tmp
+*~
+
+# Archivos generados
+*.desktop
+*.log
+*.out
+
+# Directorios del sistema
+.DS_Store
+Thumbs.db
+
+# Configuración local / secretos
+.env
+*.key
+*.pem
+
+# Ignorar llaves SSH (¡muy importante!)
+id_ed25519
+id_ed25519.pub
+
+# Ignorar carpetas de caché si alguna aparece
+.cache/
